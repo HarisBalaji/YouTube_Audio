@@ -26,29 +26,7 @@ def generate_audio(text, lang, duration):
         segment_audio = audio[:duration]
 
     return segment_audio
-'''def pitch_shift(audio, semitones):
-    # Convert audio to a numpy array
-    audio_data = np.array(audio.get_array_of_samples())
 
-    # Calculate the pitch shift factor
-    pitch_shift_factor = 2 ** (semitones / 12.0)
-
-    # Apply pitch shift to the audio data
-    shifted_data = np.interp(
-        np.arange(0, len(audio_data), pitch_shift_factor),
-        np.arange(0, len(audio_data)),
-        audio_data
-    ).astype(np.int16)
-
-    # Create a new AudioSegment from the shifted data
-    shifted_audio = AudioSegment(
-        shifted_data.tobytes(),
-        frame_rate=audio.frame_rate,
-        sample_width=shifted_data.dtype.itemsize,
-        channels=audio.channels
-    )
-
-    return shifted_audio'''
 @app.route("/", methods=["GET", "POST"])
 def index():
     languages = tts_langs()
@@ -64,15 +42,6 @@ def index():
             lis.append(i)
             y.append(i["duration"])
         translator = Translator()
-        '''languages = tts_langs()
-        print(y)
-        print('Select the target Language: ')
-        for i, (lang_code, lang_name) in enumerate(languages.items()):
-            print(f"{i}: {lang_name}")'''
-
-        '''target_lang_index = int(input("Enter the index of the target language: "))
-        dest_lang = list(languages.keys())[target_lang_index]'''
-
         current_time = 0
         segment_audios = []
         audio = AudioSegment.silent(duration=0)
